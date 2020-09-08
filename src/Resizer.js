@@ -16,7 +16,7 @@ class Resizer extends React.Component {
       resizerClassName,
       split,
       style,
-      children,
+      resizerChildren,
     } = this.props;
     const classes = [resizerClassName, split, className];
 
@@ -47,7 +47,7 @@ class Resizer extends React.Component {
           }
         }}
       >
-        {children}
+        {resizerChildren}
       </span>
     );
   }
@@ -63,7 +63,7 @@ Resizer.propTypes = {
   split: PropTypes.oneOf(['vertical', 'horizontal']),
   style: stylePropType,
   resizerClassName: PropTypes.string.isRequired,
-  children: PropTypes.node,
+  resizerChildren: PropTypes.node,
 };
 
 Resizer.defaultProps = {

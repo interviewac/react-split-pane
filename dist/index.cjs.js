@@ -273,48 +273,43 @@ var Resizer = /*#__PURE__*/ (function (_React$Component) {
           resizerClassName = _this$props.resizerClassName,
           split = _this$props.split,
           style = _this$props.style,
-          children = _this$props.children;
+          resizerChildren = _this$props.resizerChildren;
         var classes = [resizerClassName, split, className];
         return /*#__PURE__*/ React__default['default'].createElement(
-          'div',
+          'span',
           {
+            role: 'presentation',
+            style: style,
             className: classes.join(' '),
-          },
-          /*#__PURE__*/ React__default['default'].createElement(
-            'span',
-            {
-              role: 'presentation',
-              style: style,
-              onMouseDown: function onMouseDown(event) {
-                return _onMouseDown(event);
-              },
-              onTouchStart: function onTouchStart(event) {
-                event.preventDefault();
-
-                _onTouchStart(event);
-              },
-              onTouchEnd: function onTouchEnd(event) {
-                event.preventDefault();
-
-                _onTouchEnd(event);
-              },
-              onClick: function onClick(event) {
-                if (_onClick) {
-                  event.preventDefault();
-
-                  _onClick(event);
-                }
-              },
-              onDoubleClick: function onDoubleClick(event) {
-                if (_onDoubleClick) {
-                  event.preventDefault();
-
-                  _onDoubleClick(event);
-                }
-              },
+            onMouseDown: function onMouseDown(event) {
+              return _onMouseDown(event);
             },
-            children
-          )
+            onTouchStart: function onTouchStart(event) {
+              event.preventDefault();
+
+              _onTouchStart(event);
+            },
+            onTouchEnd: function onTouchEnd(event) {
+              event.preventDefault();
+
+              _onTouchEnd(event);
+            },
+            onClick: function onClick(event) {
+              if (_onClick) {
+                event.preventDefault();
+
+                _onClick(event);
+              }
+            },
+            onDoubleClick: function onDoubleClick(event) {
+              if (_onDoubleClick) {
+                event.preventDefault();
+
+                _onDoubleClick(event);
+              }
+            },
+          },
+          resizerChildren
         );
       },
     },
@@ -333,7 +328,7 @@ Resizer.propTypes = {
   split: PropTypes__default['default'].oneOf(['vertical', 'horizontal']),
   style: stylePropType__default['default'],
   resizerClassName: PropTypes__default['default'].string.isRequired,
-  children: PropTypes__default['default'].node,
+  resizerChildren: PropTypes__default['default'].node,
 };
 Resizer.defaultProps = {
   resizerClassName: RESIZER_DEFAULT_CLASSNAME,
