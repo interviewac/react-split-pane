@@ -276,7 +276,7 @@ var Resizer = /*#__PURE__*/ (function (_React$Component) {
           resizerChildren = _this$props.resizerChildren;
         var classes = [resizerClassName, split, className];
         return /*#__PURE__*/ React__default['default'].createElement(
-          'span',
+          'div',
           {
             role: 'presentation',
             style: style,
@@ -707,7 +707,7 @@ var SplitPane = /*#__PURE__*/ (function (_React$Component) {
               resizerClassName: resizerClassNamesIncludingDefault,
               split: split,
               style: resizerStyle || {},
-              children: resizerChildren,
+              resizerChildren: resizerChildren,
             }),
             /*#__PURE__*/ React__default['default'].createElement(
               Pane,

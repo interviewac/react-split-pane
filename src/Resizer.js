@@ -21,7 +21,7 @@ class Resizer extends React.Component {
     const classes = [resizerClassName, split, className];
 
     return (
-      <span
+      <div
         role="presentation"
         style={style}
         className={classes.join(' ')}
@@ -48,7 +48,7 @@ class Resizer extends React.Component {
         }}
       >
         {resizerChildren}
-      </span>
+      </div>
     );
   }
 }
