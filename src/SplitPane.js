@@ -119,11 +119,6 @@ class SplitPane extends React.Component {
 
   onTouchMove(event) {
     const { allowResize, maxSize, minSize, onChange, split, step } = this.props;
-    const {
-      releasedPastMin: onReleasePastMin,
-      releasedPastMax: onReleasePastMax,
-      releaseMargin,
-    } = this.props;
     const { active, position } = this.state;
 
     if (allowResize && active) {
@@ -175,14 +170,8 @@ class SplitPane extends React.Component {
 
           if (newSize < minSize) {
             newSize = minSize;
-            if (!active && newSize < minSize - releaseMargin) {
-              if (typeof onReleasePastMin === 'function') onReleasePastMin();
-            }
           } else if (maxSize !== undefined && newSize > newMaxSize) {
             newSize = newMaxSize;
-            if (!active && newSize < maxSize + releaseMargin) {
-              if (typeof onReleasePastMax === 'function') onReleasePastMax();
-            }
           } else {
             this.setState({
               position: newPosition,
@@ -203,10 +192,28 @@ class SplitPane extends React.Component {
 
   onMouseUp() {
     const { allowResize, onDragFinished } = this.props;
+    const {
+      onReleasePastMin,
+      onReleasePastMax,
+      releaseMargin,
+      minSize,
+      maxSize,
+    } = this.props;
     const { active, draggedSize } = this.state;
     if (allowResize && active) {
       if (typeof onDragFinished === 'function') {
         onDragFinished(draggedSize);
+      }
+      if (
+        draggedSize < minSize - releaseMargin &&
+        typeof onReleasePastMin === 'function'
+      ) {
+        onReleasePastMin();
+      } else if (
+        draggedSize > maxSize + releaseMargin &&
+        typeof onReleasePastMax === 'function'
+      ) {
+        onReleasePastMax();
       }
       this.setState({ active: false });
     }
