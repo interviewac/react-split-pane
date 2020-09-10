@@ -474,6 +474,10 @@ var SplitPane = /*#__PURE__*/ (function (_React$Component) {
             onChange = _this$props2.onChange,
             split = _this$props2.split,
             step = _this$props2.step;
+          var _this$props3 = this.props,
+            releasedPastMin = _this$props3.releasedPastMin,
+            releasedPastMax = _this$props3.releasedPastMax,
+            releaseMargin = _this$props3.releaseMargin;
           var _this$state = this.state,
             active = _this$state.active,
             position = _this$state.position;
@@ -534,8 +538,10 @@ var SplitPane = /*#__PURE__*/ (function (_React$Component) {
 
                 if (newSize < minSize) {
                   newSize = minSize;
+                  if (newSize < minSize - releaseMargin) releasedPastMin();
                 } else if (maxSize !== undefined && newSize > newMaxSize) {
                   newSize = newMaxSize;
+                  if (newSize < maxSize + releaseMargin) releasedPastMax();
                 } else {
                   this.setState({
                     position: newPosition,
@@ -561,9 +567,9 @@ var SplitPane = /*#__PURE__*/ (function (_React$Component) {
       {
         key: 'onMouseUp',
         value: function onMouseUp() {
-          var _this$props3 = this.props,
-            allowResize = _this$props3.allowResize,
-            onDragFinished = _this$props3.onDragFinished;
+          var _this$props4 = this.props,
+            allowResize = _this$props4.allowResize,
+            onDragFinished = _this$props4.onDragFinished;
           var _this$state2 = this.state,
             active = _this$state2.active,
             draggedSize = _this$state2.draggedSize;
@@ -584,23 +590,23 @@ var SplitPane = /*#__PURE__*/ (function (_React$Component) {
         value: function render() {
           var _this2 = this;
 
-          var _this$props4 = this.props,
-            allowResize = _this$props4.allowResize,
-            children = _this$props4.children,
-            className = _this$props4.className,
-            onResizerClick = _this$props4.onResizerClick,
-            onResizerDoubleClick = _this$props4.onResizerDoubleClick,
-            paneClassName = _this$props4.paneClassName,
-            pane1ClassName = _this$props4.pane1ClassName,
-            pane2ClassName = _this$props4.pane2ClassName,
-            paneStyle = _this$props4.paneStyle,
-            pane1StyleProps = _this$props4.pane1Style,
-            pane2StyleProps = _this$props4.pane2Style,
-            resizerClassName = _this$props4.resizerClassName,
-            resizerStyle = _this$props4.resizerStyle,
-            resizerChildren = _this$props4.resizerChildren,
-            split = _this$props4.split,
-            styleProps = _this$props4.style;
+          var _this$props5 = this.props,
+            allowResize = _this$props5.allowResize,
+            children = _this$props5.children,
+            className = _this$props5.className,
+            onResizerClick = _this$props5.onResizerClick,
+            onResizerDoubleClick = _this$props5.onResizerDoubleClick,
+            paneClassName = _this$props5.paneClassName,
+            pane1ClassName = _this$props5.pane1ClassName,
+            pane2ClassName = _this$props5.pane2ClassName,
+            paneStyle = _this$props5.paneStyle,
+            pane1StyleProps = _this$props5.pane1Style,
+            pane2StyleProps = _this$props5.pane2Style,
+            resizerClassName = _this$props5.resizerClassName,
+            resizerStyle = _this$props5.resizerStyle,
+            resizerChildren = _this$props5.resizerChildren,
+            split = _this$props5.split,
+            styleProps = _this$props5.style;
           var _this$state3 = this.state,
             pane1Size = _this$state3.pane1Size,
             pane2Size = _this$state3.pane2Size;
@@ -783,6 +789,9 @@ SplitPane.propTypes = {
   resizerClassName: PropTypes.string,
   resizerChildren: PropTypes.node,
   step: PropTypes.number,
+  releasedPastMin: PropTypes.func,
+  releasedPastMax: PropTypes.func,
+  releaseMargin: PropTypes.number,
 };
 SplitPane.defaultProps = {
   allowResize: true,
@@ -792,6 +801,7 @@ SplitPane.defaultProps = {
   paneClassName: '',
   pane1ClassName: '',
   pane2ClassName: '',
+  releaseMargin: 10,
 };
 polyfill(SplitPane);
 
