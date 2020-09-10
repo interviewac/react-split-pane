@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes, { number } from 'prop-types';
+import PropTypes from 'prop-types';
 import stylePropType from 'react-style-proptype';
 import { polyfill } from 'react-lifecycles-compat';
 
@@ -119,7 +119,11 @@ class SplitPane extends React.Component {
 
   onTouchMove(event) {
     const { allowResize, maxSize, minSize, onChange, split, step } = this.props;
-    const { releasedPastMin, releasedPastMax, releaseMargin } = this.props;
+    const {
+      releasedPastMin: onReleasePastMin,
+      releasedPastMax: onReleasePastMax,
+      releaseMargin,
+    } = this.props;
     const { active, position } = this.state;
 
     if (allowResize && active) {
@@ -171,10 +175,14 @@ class SplitPane extends React.Component {
 
           if (newSize < minSize) {
             newSize = minSize;
-            if (newSize < minSize - releaseMargin) releasedPastMin();
+            if (!active && newSize < minSize - releaseMargin) {
+              if (typeof onReleasePastMin === 'function') onReleasePastMin();
+            }
           } else if (maxSize !== undefined && newSize > newMaxSize) {
             newSize = newMaxSize;
-            if (newSize < maxSize + releaseMargin) releasedPastMax();
+            if (!active && newSize < maxSize + releaseMargin) {
+              if (typeof onReleasePastMax === 'function') onReleasePastMax();
+            }
           } else {
             this.setState({
               position: newPosition,
@@ -381,8 +389,8 @@ SplitPane.propTypes = {
   resizerClassName: PropTypes.string,
   resizerChildren: PropTypes.node,
   step: PropTypes.number,
-  releasedPastMin: PropTypes.func,
-  releasedPastMax: PropTypes.func,
+  onReleasePastMin: PropTypes.func,
+  onReleasePastMax: PropTypes.func,
   releaseMargin: PropTypes.number,
 };
 

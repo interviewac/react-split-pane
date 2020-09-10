@@ -475,8 +475,8 @@ var SplitPane = /*#__PURE__*/ (function (_React$Component) {
             split = _this$props2.split,
             step = _this$props2.step;
           var _this$props3 = this.props,
-            releasedPastMin = _this$props3.releasedPastMin,
-            releasedPastMax = _this$props3.releasedPastMax,
+            onReleasePastMin = _this$props3.releasedPastMin,
+            onReleasePastMax = _this$props3.releasedPastMax,
             releaseMargin = _this$props3.releaseMargin;
           var _this$state = this.state,
             active = _this$state.active,
@@ -538,10 +538,18 @@ var SplitPane = /*#__PURE__*/ (function (_React$Component) {
 
                 if (newSize < minSize) {
                   newSize = minSize;
-                  if (newSize < minSize - releaseMargin) releasedPastMin();
+
+                  if (!active && newSize < minSize - releaseMargin) {
+                    if (typeof onReleasePastMin === 'function')
+                      onReleasePastMin();
+                  }
                 } else if (maxSize !== undefined && newSize > newMaxSize) {
                   newSize = newMaxSize;
-                  if (newSize < maxSize + releaseMargin) releasedPastMax();
+
+                  if (!active && newSize < maxSize + releaseMargin) {
+                    if (typeof onReleasePastMax === 'function')
+                      onReleasePastMax();
+                  }
                 } else {
                   this.setState({
                     position: newPosition,
@@ -789,8 +797,8 @@ SplitPane.propTypes = {
   resizerClassName: PropTypes.string,
   resizerChildren: PropTypes.node,
   step: PropTypes.number,
-  releasedPastMin: PropTypes.func,
-  releasedPastMax: PropTypes.func,
+  onReleasePastMin: PropTypes.func,
+  onReleasePastMax: PropTypes.func,
   releaseMargin: PropTypes.number,
 };
 SplitPane.defaultProps = {

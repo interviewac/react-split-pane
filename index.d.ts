@@ -26,8 +26,8 @@ export type SplitPaneProps = {
   resizerClassName?: string;
   step?: number;
   resizerChildren?: React.ReactNode;
-  releasedPastMin?: () => void;
-  releasedPastMax?: () => void;
+  onReleasePastMin?: () => void;
+  onReleasePastMax?: () => void;
   releaseMargin?: number;
 };
 
