@@ -491,6 +491,10 @@ var SplitPane = /*#__PURE__*/ (function (_React$Component) {
             onChange = _this$props2.onChange,
             split = _this$props2.split,
             step = _this$props2.step;
+          var _this$props3 = this.props,
+            onReleasePastMin = _this$props3.onReleasePastMin,
+            onReleasePastMax = _this$props3.onReleasePastMax,
+            releaseMargin = _this$props3.releaseMargin;
           var _this$state = this.state,
             active = _this$state.active,
             position = _this$state.position;
@@ -550,8 +554,10 @@ var SplitPane = /*#__PURE__*/ (function (_React$Component) {
                 var newPosition = position - positionDelta;
 
                 if (newSize < minSize) {
+                  if (newSize < minSize - releaseMargin) onReleasePastMin();
                   newSize = minSize;
                 } else if (maxSize !== undefined && newSize > newMaxSize) {
+                  if (newSize > maxSize + releaseMargin) onReleasePastMax();
                   newSize = newMaxSize;
                 } else {
                   this.setState({
@@ -578,15 +584,9 @@ var SplitPane = /*#__PURE__*/ (function (_React$Component) {
       {
         key: 'onMouseUp',
         value: function onMouseUp() {
-          var _this$props3 = this.props,
-            allowResize = _this$props3.allowResize,
-            onDragFinished = _this$props3.onDragFinished;
           var _this$props4 = this.props,
-            onReleasePastMin = _this$props4.onReleasePastMin,
-            onReleasePastMax = _this$props4.onReleasePastMax,
-            releaseMargin = _this$props4.releaseMargin,
-            minSize = _this$props4.minSize,
-            maxSize = _this$props4.maxSize;
+            allowResize = _this$props4.allowResize,
+            onDragFinished = _this$props4.onDragFinished;
           var _this$state2 = this.state,
             active = _this$state2.active,
             draggedSize = _this$state2.draggedSize;
@@ -594,12 +594,6 @@ var SplitPane = /*#__PURE__*/ (function (_React$Component) {
           if (allowResize && active) {
             if (typeof onDragFinished === 'function') {
               onDragFinished(draggedSize);
-            }
-
-            if (draggedSize < minSize - releaseMargin) {
-              onReleasePastMin();
-            } else if (draggedSize > maxSize + releaseMargin) {
-              onReleasePastMax();
             }
 
             this.setState({
