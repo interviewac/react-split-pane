@@ -170,10 +170,18 @@ class SplitPane extends React.Component {
           const newPosition = position - positionDelta;
 
           if (newSize < minSize) {
-            if (newSize < minSize - releaseMargin) onReleasePastMin();
+            if (
+              newSize < minSize - releaseMargin &&
+              typeof onReleasePastMin === 'function'
+            )
+              onReleasePastMin();
             newSize = minSize;
           } else if (maxSize !== undefined && newSize > newMaxSize) {
-            if (newSize > maxSize + releaseMargin) onReleasePastMax();
+            if (
+              newSize > maxSize + releaseMargin &&
+              typeof onReleasePastMax === 'function'
+            )
+              onReleasePastMax();
             newSize = newMaxSize;
           } else {
             this.setState({
