@@ -596,15 +596,9 @@ var SplitPane = /*#__PURE__*/ (function (_React$Component) {
               onDragFinished(draggedSize);
             }
 
-            if (
-              draggedSize < minSize - releaseMargin &&
-              typeof onReleasePastMin === 'function'
-            ) {
+            if (draggedSize < minSize - releaseMargin) {
               onReleasePastMin();
-            } else if (
-              draggedSize > maxSize + releaseMargin &&
-              typeof onReleasePastMax === 'function'
-            ) {
+            } else if (draggedSize > maxSize + releaseMargin) {
               onReleasePastMax();
             }
 

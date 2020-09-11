@@ -204,15 +204,9 @@ class SplitPane extends React.Component {
       if (typeof onDragFinished === 'function') {
         onDragFinished(draggedSize);
       }
-      if (
-        draggedSize < minSize - releaseMargin &&
-        typeof onReleasePastMin === 'function'
-      ) {
+      if (draggedSize < minSize - releaseMargin) {
         onReleasePastMin();
-      } else if (
-        draggedSize > maxSize + releaseMargin &&
-        typeof onReleasePastMax === 'function'
-      ) {
+      } else if (draggedSize > maxSize + releaseMargin) {
         onReleasePastMax();
       }
       this.setState({ active: false });
